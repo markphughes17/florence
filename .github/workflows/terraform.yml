@@ -37,6 +37,7 @@ on:
   pull_request:
 
 permissions:
+  id-token: write
   contents: read
 
 jobs:
@@ -60,7 +61,7 @@ jobs:
       with:
         role-to-assume: arn:aws:iam::677892236370:role/GithubOIDCRole
         role-session-name: GitHub_to_AWS_via_FederatedOIDC
-        aws-region: eu-west-2
+        aws-region: us-east-1
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
