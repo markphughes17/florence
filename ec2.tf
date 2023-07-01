@@ -2,7 +2,7 @@ data "aws_ami" "amazon-2" {
   most_recent = true
 
   filter {
-    name = "name"
+    name   = "name"
     values = ["amzn2-ami-hvm-*-x86_64-ebs"]
   }
   owners = ["amazon"]
@@ -10,7 +10,7 @@ data "aws_ami" "amazon-2" {
 
 data "aws_vpc" "default" {
   default = true
-} 
+}
 
 resource "aws_subnet" "my_subnet" {
   vpc_id            = data.aws_vpc.default.id
@@ -28,11 +28,11 @@ resource "aws_security_group" "allow_users" {
   vpc_id      = data.aws_vpc.default.id
 
   ingress {
-    description      = "External SSH"
-    from_port        = 22
-    to_port          = 22
-    protocol         = "tcp"
-    cidr_blocks      = var.user_addresses
+    description = "External SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = var.user_addresses
   }
 
   egress {
@@ -52,7 +52,7 @@ resource "aws_instance" "my-ec2" {
   # get Amazon Linux 2 AMI
   ami = data.aws_ami.amazon-2.id
 
-  instance_type = "t3.micro"
+  instance_type        = "t3.micro"
   iam_instance_profile = aws_iam_instance_profile.ec2_instance.id
 
   tags = {

@@ -7,7 +7,7 @@ variable "user_addresses" {
 }
 
 variable "service_name" {
-    type = string
+  type = string
 }
 
 variable "cidr_block" {
@@ -15,5 +15,5 @@ variable "cidr_block" {
 }
 
 variable "availability_zone" {
-    type = string
+  type = string
 }
