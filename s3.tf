@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "florence" {
-  bucket = "florence_bucket"
+  bucket = "florence-bucket"
 
   tags = {
     Service = var.service_name
