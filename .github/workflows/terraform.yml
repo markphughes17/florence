@@ -61,6 +61,7 @@ jobs:
       with:
         role-to-assume: arn:aws:iam::677892236370:role/GithubOIDCRole
         role-session-name: GitHub_to_AWS_via_FederatedOIDC
+        aws-region: eu-west-2
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
