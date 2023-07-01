@@ -48,7 +48,8 @@ jobs:
     env:
       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      TF_CLI_ARGS: var-file=vars/variables.tfvars
+      TF_CLI_ARGS_PLAN: --var-file=vars/variables.tfvars
+      TF_CLI_ARGS_APPLY: --var-file=vars/variables.tfvars
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
