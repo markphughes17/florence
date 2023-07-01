@@ -12,7 +12,7 @@ data "aws_vpc" "default" {
   default = true
 }
 
-resource "aws_subnet" "my_subnet" {
+resource "aws_subnet" "florence" {
   vpc_id            = data.aws_vpc.default.id
   cidr_block        = var.cidr_block
   availability_zone = var.availability_zone
@@ -48,7 +48,7 @@ resource "aws_security_group" "allow_users" {
   }
 }
 
-resource "aws_instance" "my-ec2" {
+resource "aws_instance" "florence" {
   # get Amazon Linux 2 AMI
   ami = data.aws_ami.amazon-2.id
 

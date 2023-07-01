@@ -22,16 +22,12 @@ resource "aws_s3_bucket" "florence_logging" {
   bucket = "florence-log-bucket"
 }
 
-resource "aws_s3_bucket_acl" "florence_logging" {
-  bucket = aws_s3_bucket.florence_logging.id
-  acl    = "log-delivery-write"
-}
-
 resource "aws_s3_bucket_logging" "florence" {
   bucket = aws_s3_bucket.florence.id
 
   target_bucket = aws_s3_bucket.florence_logging.id
   target_prefix = "log/"
+
 }
 
 resource "aws_s3_bucket_public_access_block" "florence" {
