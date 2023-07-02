@@ -28,8 +28,8 @@ resource "aws_s3_bucket_notification" "florence" {
 }
 
 resource "aws_sns_topic_subscription" "s3_creates_email_target" {
-  topic_arn = aws_sns_topic.s3_alerting.arn
-  protocol  = "email"
-  endpoint  = "markh@markhughes.tech"
+  topic_arn              = aws_sns_topic.s3_alerting.arn
+  protocol               = "email"
+  endpoint               = "markh@markhughes.tech"
   endpoint_auto_confirms = true
 }
