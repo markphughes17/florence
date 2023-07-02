@@ -16,7 +16,7 @@ resource "aws_iam_policy" "bucket_access" {
           "s3:*"
         ],
         "Resource" : [
-          aws_s3_bucket.florence.arn
+          "${aws_s3_bucket.florence.arn}/*"
         ]
       }
     ]
