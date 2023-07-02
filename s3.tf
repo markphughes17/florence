@@ -7,11 +7,6 @@ resource "aws_s3_bucket" "florence" {
   }
 }
 
-resource "aws_s3_bucket_acl" "florence" {
-  bucket = aws_s3_bucket.florence.id
-  acl    = "private"
-}
-
 resource "aws_s3_bucket_versioning" "florence" {
   bucket = aws_s3_bucket.florence.id
   versioning_configuration {
@@ -29,4 +24,12 @@ resource "aws_s3_bucket_logging" "florence" {
   target_bucket = aws_s3_bucket.florence_logging.id
   target_prefix = "log/"
 
+}
+
+resource "aws_s3_bucket_ownership_controls" "ownership" {
+  bucket = aws_s3_bucket.florence.id
+
+  rule {
+    object_ownership = "BucketOwnerEnforced"
+  }
 }

@@ -50,7 +50,8 @@ resource "aws_security_group" "allow_users" {
 
 resource "aws_instance" "florence" {
   # get Amazon Linux 2 AMI
-  ami = data.aws_ami.amazon-2.id
+  ami       = data.aws_ami.amazon-2.id
+  subnet_id = aws_subnet.florence.id
 
   instance_type        = "t3.micro"
   iam_instance_profile = aws_iam_instance_profile.ec2_instance.id
