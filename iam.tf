@@ -57,7 +57,7 @@ resource "aws_iam_group" "users" {
 resource "aws_iam_policy" "user_cloudwatch_access" {
   name        = "user_policy"
   path        = "/"
-  description = "Allow "
+  description = "Allow cloudwatch and instance connect access"
   policy = jsonencode({
     "Version" : "2012-10-17",
     "Statement" : [
@@ -66,6 +66,23 @@ resource "aws_iam_policy" "user_cloudwatch_access" {
         "Action" : [
           "cloudwatch:*"
         ],
+        "Resource" : "*"
+      },
+      {
+        "Effect" : "Allow",
+        "Action" : "ec2-instance-connect:SendSSHPublicKey",
+        "Resource" : [
+          "arn:aws:ec2:eu-west-2:${var.account_id}:instance/${aws_instance.florence.id}"
+        ],
+        "Condition" : {
+          "StringEquals" : {
+            "ec2:osuser" : "ami-username"
+          }
+        }
+      },
+      {
+        "Effect" : "Allow",
+        "Action" : "ec2:DescribeInstances",
         "Resource" : "*"
       }
     ]

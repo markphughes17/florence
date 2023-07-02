@@ -26,3 +26,8 @@ variable "instance_connect" {
   type        = list(string)
   description = "IP range for instance connect service"
 }
+
+variable "account_id" {
+  type        = string
+  description = "Account ID"
+}
