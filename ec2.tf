@@ -33,6 +33,14 @@ resource "aws_security_group" "allow_users" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
+    cidr_blocks = var.instance_connect
+  }
+
+  ingress {
+    description = "InstanceConnect"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
     cidr_blocks = var.user_addresses
   }
 

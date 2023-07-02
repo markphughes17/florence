@@ -21,3 +21,8 @@ variable "availability_zone" {
 variable "my_public_key" {
   type = string
 }
+
+variable "instance_connect" {
+  type        = list(string)
+  description = "IP range for instance connect service"
+}
