@@ -7,6 +7,11 @@ resource "aws_s3_bucket" "florence" {
   }
 }
 
+resource "aws_s3_bucket_metric" "florence" {
+  bucket = aws_s3_bucket.florence.id
+  name   = "FlorenceRequests"
+}
+
 resource "aws_s3_bucket_versioning" "florence" {
   bucket = aws_s3_bucket.florence.id
   versioning_configuration {

@@ -7,17 +7,17 @@ resource "aws_cloudwatch_dashboard" "s3dash" {
         "type" : "metric",
         "x" : 8,
         "y" : 24,
-        "width" : 8,
-        "height" : 6,
+        "width" : 16,
+        "height" : 12,
         "properties" : {
           "metrics" : [
             [
               "AWS/S3",
-              "BucketSizeBytes"
+              "GetRequests"
             ],
             [
               "AWS/S3",
-              "NumberOfObjects"
+              "PutRequests"
             ],
             [
               "AWS/S3",
@@ -25,15 +25,20 @@ resource "aws_cloudwatch_dashboard" "s3dash" {
             ],
             [
               "AWS/S3",
-              "5xxErrors"
+              "PostRequests"
             ],
             [
               "AWS/S3",
-              "TotalRequestLatency"
+              "DeleteRequests"
+            ],
+            [
+              "AWS/S3",
+              "ListRequests"
             ]
           ],
           "period" : 60,
-          "stat" : "Maximum",
+          "bucket" : "florence-bucket",
+          "stat" : "Sum",
           "region" : "eu-west-2",
           "title" : "S3|Main Stats"
         }
