@@ -23,7 +23,6 @@ resource "aws_s3_bucket_notification" "florence" {
   topic {
     topic_arn     = aws_sns_topic.s3_alerting.arn
     events        = ["s3:ObjectCreated:*"]
-    filter_suffix = ".log"
   }
 }
 
