@@ -11,7 +11,6 @@ resource "aws_iam_policy" "bucket_access" {
     "Version" : "2012-10-17",
     "Statement" : [
       {
-        "Sid" : "VisualEditor0",
         "Effect" : "Allow",
         "Action" : [
           "s3:*"
@@ -34,7 +33,6 @@ resource "aws_iam_role" "ec2_bucket_access" {
       {
         Action = "sts:AssumeRole"
         Effect = "Allow"
-        Sid    = ""
         Principal = {
           Service = "ec2.amazonaws.com"
         }
@@ -65,7 +63,6 @@ resource "aws_iam_policy" "user_cloudwatch_access" {
     "Version" : "2012-10-17",
     "Statement" : [
       {
-        "Sid" : "VisualEditor0",
         "Effect" : "Allow",
         "Action" : [
           "cloudwatch:*"
