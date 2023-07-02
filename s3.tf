@@ -1,5 +1,7 @@
 resource "aws_s3_bucket" "florence" {
-  bucket = "florence-bucket"
+  bucket                   = "florence-bucket"
+  control_object_ownership = true
+  object_ownership         = "ObjectWriter"
 
   tags = {
     Service = var.service_name
