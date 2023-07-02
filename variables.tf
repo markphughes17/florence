@@ -17,3 +17,7 @@ variable "cidr_block" {
 variable "availability_zone" {
   type = string
 }
+
+variable "my_public_key" {
+  type = string
+}

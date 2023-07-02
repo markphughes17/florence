@@ -16,6 +16,7 @@ resource "aws_subnet" "florence" {
   vpc_id            = data.aws_vpc.default.id
   cidr_block        = var.cidr_block
   availability_zone = var.availability_zone
+  
 
   tags = {
     Service = var.service_name
@@ -52,11 +53,18 @@ resource "aws_instance" "florence" {
   # get Amazon Linux 2 AMI
   ami       = data.aws_ami.amazon-2.id
   subnet_id = aws_subnet.florence.id
+  associate_public_ip_address = true
 
   instance_type        = "t3.micro"
   iam_instance_profile = aws_iam_instance_profile.ec2_instance.id
+  key_name = aws_key_pair.markh.key_name
 
   tags = {
     Service = var.service_name
   }
+}
+
+resource "aws_key_pair" "markh" {
+  key_name   = "markh-key"
+  public_key = var.my_public_key
 }
