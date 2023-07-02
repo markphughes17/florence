@@ -70,6 +70,19 @@ resource "aws_iam_policy" "user_cloudwatch_access" {
       },
       {
         "Effect" : "Allow",
+        "Action" : "s3:ListAllMyBuckets",
+        "Resource" : "arn:aws:s3:::*"
+      },
+      {
+        "Effect" : "Allow",
+        "Action" : "s3:*",
+        "Resource" : [
+          "arn:aws:s3:::florence-bucket",
+          "arn:aws:s3:::florence-bucket/*"
+        ]
+      },
+      {
+        "Effect" : "Allow",
         "Action" : "ec2-instance-connect:SendSSHPublicKey",
         "Resource" : [
           "arn:aws:ec2:eu-west-2:${var.account_id}:instance/${aws_instance.florence.id}"
