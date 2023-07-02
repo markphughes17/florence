@@ -43,7 +43,7 @@ resource "aws_cloudwatch_dashboard" "s3dash" {
 }
 
 resource "aws_cloudwatch_dashboard" "ec2dash" {
-  dashboard_name = "s3-dashboard"
+  dashboard_name = "ec2-dashboard"
 
   dashboard_body = jsonencode({
     widgets = [
