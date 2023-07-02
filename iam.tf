@@ -52,3 +52,39 @@ resource "aws_iam_instance_profile" "ec2_instance" {
   name = "ec2_instance_profile"
   role = aws_iam_role.ec2_bucket_access.name
 }
+
+resource "aws_iam_group" "users" {
+  name = "users"
+}
+
+resource "aws_iam_policy" "user_cloudwatch_access" {
+  name        = "user_policy"
+  path        = "/"
+  description = "Allow "
+  policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Sid" : "VisualEditor0",
+        "Effect" : "Allow",
+        "Action" : [
+          "cloudwatch:*"
+        ],
+        "Resource" : "*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_group_policy_attachment" "group_attach" {
+  group      = aws_iam_group.users.name
+  policy_arn = aws_iam_policy.user_cloudwatch_access.arn
+}
+
+resource "aws_iam_group_membership" "team" {
+  name = "group-membership"
+
+  users = var.username
+
+  group = aws_iam_group.users.name
+}
