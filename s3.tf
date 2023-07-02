@@ -1,7 +1,6 @@
 resource "aws_s3_bucket" "florence" {
-  bucket                   = "florence-bucket"
-  control_object_ownership = true
-  object_ownership         = "ObjectWriter"
+  bucket = "florence-bucket"
+
 
   tags = {
     Service = var.service_name
@@ -30,12 +29,4 @@ resource "aws_s3_bucket_logging" "florence" {
   target_bucket = aws_s3_bucket.florence_logging.id
   target_prefix = "log/"
 
-}
-
-resource "aws_s3_bucket_public_access_block" "florence" {
-  bucket = aws_s3_bucket.florence.id
-
-  block_public_acls   = true
-  block_public_policy = true
-  ignore_public_acls  = true
 }
