@@ -1,6 +1,6 @@
 resource "aws_s3_bucket" "florence" {
   bucket = "florence-bucket"
-
+  force_destroy = true
 
   tags = {
     Service = var.service_name
