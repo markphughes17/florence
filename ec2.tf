@@ -69,3 +69,29 @@ resource "aws_key_pair" "markh" {
   key_name   = "markh-key"
   public_key = var.my_public_key
 }
+
+resource "aws_internet_gateway" "florence" {
+  vpc_id = data.aws_vpc.default.id
+
+  tags = {
+    Name = "main"
+  }
+}
+
+resource "aws_route_table" "florence" {
+  vpc_id = data.aws_vpc.default.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.florence.id
+  }
+
+  tags = {
+    Name = "florence"
+  }
+}
+
+resource "aws_route_table_association" "rta_subnet_public" {
+  subnet_id      = aws_subnet.florence.id
+  route_table_id = aws_route_table.florence.id
+}
