@@ -59,7 +59,7 @@ resource "aws_instance" "florence" {
   iam_instance_profile = aws_iam_instance_profile.ec2_instance.id
   key_name             = aws_key_pair.markh.key_name
 
-  security_groups = [ aws_security_group.allow_users.id ]
+  security_groups = [aws_security_group.allow_users.id]
   tags = {
     Service = var.service_name
   }
