@@ -29,7 +29,7 @@ resource "aws_s3_bucket_notification" "florence" {
 }
 
 resource "aws_sns_topic_subscription" "s3_creates_email_target" {
-  count = length(var.username)
+  count                  = length(var.username)
   topic_arn              = aws_sns_topic.s3_alerting.arn
   protocol               = "email"
   endpoint               = element(var.username, count.index)
