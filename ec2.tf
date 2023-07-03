@@ -18,9 +18,7 @@ resource "aws_subnet" "florence" {
   availability_zone = var.availability_zone
 
 
-  tags = {
-    Service = var.service_name
-  }
+  tags = local.common_tags
 }
 
 resource "aws_security_group" "allow_users" {
@@ -52,9 +50,7 @@ resource "aws_security_group" "allow_users" {
     ipv6_cidr_blocks = ["::/0"]
   }
 
-  tags = {
-    Service = var.service_name
-  }
+  tags = local.common_tags
 }
 
 resource "aws_instance" "florence" {
@@ -68,22 +64,20 @@ resource "aws_instance" "florence" {
   key_name             = aws_key_pair.markh.key_name
 
   vpc_security_group_ids = [aws_security_group.allow_users.id]
-  tags = {
-    Service = var.service_name
-  }
+  tags                   = local.common_tags
 }
 
 resource "aws_key_pair" "markh" {
   key_name   = "markh-key"
   public_key = var.my_public_key
+
+  tags = local.common_tags
 }
 
 resource "aws_internet_gateway" "florence" {
   vpc_id = data.aws_vpc.default.id
 
-  tags = {
-    Name = "main"
-  }
+  tags = local.common_tags
 }
 
 resource "aws_route_table" "florence" {
@@ -94,9 +88,7 @@ resource "aws_route_table" "florence" {
     gateway_id = aws_internet_gateway.florence.id
   }
 
-  tags = {
-    Name = "florence"
-  }
+  tags = local.common_tags
 }
 
 resource "aws_route_table_association" "rta_subnet_public" {

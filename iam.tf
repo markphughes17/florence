@@ -21,6 +21,8 @@ resource "aws_iam_policy" "bucket_access" {
       }
     ]
   })
+
+  tags = local.common_tags
 }
 
 resource "aws_iam_role" "ec2_bucket_access" {
@@ -38,6 +40,7 @@ resource "aws_iam_role" "ec2_bucket_access" {
       },
     ]
   })
+  tags = local.common_tags
 }
 
 resource "aws_iam_role_policy_attachment" "ec2_bucket" {
@@ -48,6 +51,8 @@ resource "aws_iam_role_policy_attachment" "ec2_bucket" {
 resource "aws_iam_instance_profile" "ec2_instance" {
   name = "ec2_instance_profile"
   role = aws_iam_role.ec2_bucket_access.name
+
+  tags = local.common_tags
 }
 
 resource "aws_iam_group" "users" {
@@ -75,7 +80,10 @@ resource "aws_iam_policy" "user_cloudwatch_access" {
       },
       {
         "Effect" : "Allow",
-        "Action" : "s3:*",
+        "Action" : [
+          "s3:Get*",
+          "s3:List*"
+        ],
         "Resource" : [
           "arn:aws:s3:::florence-bucket",
           "arn:aws:s3:::florence-bucket/*"
@@ -100,6 +108,8 @@ resource "aws_iam_policy" "user_cloudwatch_access" {
       }
     ]
   })
+
+  tags = local.common_tags
 }
 
 resource "aws_iam_group_policy_attachment" "group_attach" {
@@ -113,4 +123,65 @@ resource "aws_iam_group_membership" "team" {
   users = var.username
 
   group = aws_iam_group.users.name
+}
+
+
+#############
+##Cloudtrail
+#############
+
+resource "aws_iam_role" "cloudtrail_role" {
+  name               = "my-cloudtrail-role"
+  assume_role_policy = <<-EOF
+   {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Action": "sts:AssumeRole",
+          "Principal": {
+            "Service": "cloudtrail.amazonaws.com"
+          },
+          "Effect": "Allow"
+        }
+      ]
+   }
+  EOF
+
+  tags = local.common_tags
+}
+
+resource "aws_iam_policy" "cloudtrail_policy" {
+  name        = "my-trail-policy-for-log-groups"
+  description = "policy for trail to send events to cloudwatch log groups"
+  policy      = <<-EOF
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogStream"
+            ],
+            "Resource": [
+              "${aws_cloudwatch_log_group.trails.arn}:*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:PutLogEvents"
+            ],
+            "Resource": [
+              "${aws_cloudwatch_log_group.trails.arn}:*"
+            ]
+        }
+      ]
+    }
+  EOF
+
+  tags = local.common_tags
+}
+resource "aws_iam_role_policy_attachment" "cloudtrail_roles_policy" {
+  role       = aws_iam_role.cloudtrail_role.name
+  policy_arn = aws_iam_policy.cloudtrail_policy.arn
 }

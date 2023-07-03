@@ -4,43 +4,16 @@ resource "aws_cloudwatch_dashboard" "s3dash" {
   dashboard_body = jsonencode({
     widgets = [
       {
-        "type" : "metric",
-        "x" : 8,
+        "type" : "log",
+        "x" : 12,
         "y" : 24,
-        "width" : 16,
-        "height" : 12,
+        "width" : 12,
+        "height" : 6,
         "properties" : {
-          "metrics" : [
-            [
-              "AWS/S3",
-              "GetRequests"
-            ],
-            [
-              "AWS/S3",
-              "PutRequests"
-            ],
-            [
-              "AWS/S3",
-              "DeleteRequests"
-            ],
-            [
-              "AWS/S3",
-              "PostRequests"
-            ],
-            [
-              "AWS/S3",
-              "DeleteRequests"
-            ],
-            [
-              "AWS/S3",
-              "ListRequests"
-            ]
-          ],
-          "period" : 60,
-          "bucket" : "florence-bucket",
-          "stat" : "Sum",
           "region" : "eu-west-2",
-          "title" : "S3|Main Stats"
+          "title" : "S3 writes",
+          "query" : "SOURCE 'florence-s3'",
+          "view" : "table"
         }
       }
     ]
@@ -92,4 +65,11 @@ resource "aws_cloudwatch_dashboard" "ec2dash" {
       }
     ]
   })
+}
+
+
+resource "aws_cloudwatch_log_group" "trails" {
+  name = "trails"
+
+  tags = local.common_tags
 }

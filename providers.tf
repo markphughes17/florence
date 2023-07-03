@@ -21,3 +21,10 @@ terraform {
 provider "aws" {
   region = "eu-west-2"
 }
+
+locals {
+  # Common tags to be assigned to all resources
+  common_tags = {
+    Name = var.service_name
+  }
+}
